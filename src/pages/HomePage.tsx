@@ -49,17 +49,30 @@ const HomePage = () => {
               <LoadingIcon size={20} />
             </div>
           ) : (
-            currentEvents!.map(
-              ({ publicId, startDate, endDate, name, description }) => (
-                <Event
-                  publicId={publicId}
-                  startDate={formatDateString(startDate)}
-                  endDate={formatDateString(endDate)}
-                  name={name}
-                  description={description}
-                />
-              )
-            )
+            <div>
+              <div className="mt-8">
+                <div className="">
+                  <h1 className="font-bold text-3xl text-center">Home</h1>
+                </div>
+                <div className="flex flex-row justify-between items-center mx-32 mt-4 font-bold">
+                  <span className="border-b-2 p-2 hover:cursor-pointer">Recentes</span>
+                  <span className="hover:cursor-pointer">Sugerido</span>
+                </div>
+              </div>
+              <div>
+                {currentEvents!.map(
+                  ({ publicId, startDate, endDate, name, description }) => (
+                    <Event
+                      publicId={publicId}
+                      startDate={formatDateString(startDate)}
+                      endDate={formatDateString(endDate)}
+                      name={name}
+                      description={description}
+                    />
+                  )
+                )}
+              </div>
+            </div>
           )}
         </div>
       </div>
