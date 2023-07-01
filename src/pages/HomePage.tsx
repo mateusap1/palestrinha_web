@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 import { Event } from "../components/Event";
+import { LoadingIcon } from "../components/LoadingIcon";
+
 import { useBackEnd } from "../contexts/BackEndProvider";
 
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 const formatDateString = (dateString: string): string => {
   const date = new Date(dateString);
-  const formattedDate = format(date, 'dd MMM, HH:mm');
+  const formattedDate = format(date, "dd MMM, HH:mm");
 
   return formattedDate;
-}
+};
 
 const HomePage = () => {
   const [currentEvents, setCurrentEvents] = useState<PalestrinhaEvent[] | null>(
@@ -43,7 +45,9 @@ const HomePage = () => {
       <div className="flex justify-center w-full">
         <div className="w-128">
           {isLoading ? (
-            <></>
+            <div className="flex items-center justify-center h-screen">
+              <LoadingIcon size={20} />
+            </div>
           ) : (
             currentEvents!.map(
               ({ publicId, startDate, endDate, name, description }) => (
