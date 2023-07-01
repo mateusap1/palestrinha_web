@@ -2,10 +2,15 @@ import * as React from "react";
 
 import { createContext, useState, useContext, useEffect } from "react";
 
-import { sampleEvents1 } from "../misc/samples";
+import { sampleEvents1, sampleEvents2 } from "../misc/samples";
 
 type BackEndContext = {
   getHomeEvents: (page: number, count: number) => Promise<PalestrinhaEvent[]>;
+  getHomeEventsRecommededUser: (
+    userEmail: string,
+    page: number,
+    count: number
+  ) => Promise<PalestrinhaEvent[]>;
 };
 
 type BackEndProviderProps = {
@@ -33,8 +38,24 @@ export const BackEndProvider = ({ children }: BackEndProviderProps) => {
     return sampleEvents1.slice((page - 1) * count, count);
   };
 
+  const getHomeEventsRecommededUser = async (
+    userEmail: string,
+    page: number,
+    count: number
+  ) => {
+    await waitForDelay(500);
+
+    if ((page - 1) * count >= sampleEvents1.length) {
+      throw new Error("Unbounded page");
+    }
+
+    return sampleEvents2.slice((page - 1) * count, count);
+  };
+
   return (
-    <BackEnd.Provider value={{ getHomeEvents }}>{children}</BackEnd.Provider>
+    <BackEnd.Provider value={{ getHomeEvents, getHomeEventsRecommededUser }}>
+      {children}
+    </BackEnd.Provider>
   );
 };
 
