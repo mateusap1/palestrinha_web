@@ -2,7 +2,11 @@ import * as React from "react";
 
 import { createContext, useState, useContext, useEffect } from "react";
 
-type BackEndContext = {};
+import { sampleEvents1 } from "../misc/samples";
+
+type BackEndContext = {
+  getHomeEvents: (page: number, count: number) => Promise<PalestrinhaEvent[]>;
+};
 
 type BackEndProviderProps = {
   children: JSX.Element;
@@ -19,7 +23,19 @@ export const BackEndProvider = ({ children }: BackEndProviderProps) => {
     });
   };
 
-  return <BackEnd.Provider value={{}}>{children}</BackEnd.Provider>;
+  const getHomeEvents = async (page: number, count: number) => {
+    await waitForDelay(500);
+
+    if ((page - 1) * count >= sampleEvents1.length) {
+      throw new Error("Unbounded page");
+    }
+
+    return sampleEvents1.slice((page - 1) * count, count);
+  };
+
+  return (
+    <BackEnd.Provider value={{ getHomeEvents }}>{children}</BackEnd.Provider>
+  );
 };
 
 export const useBackEnd = () => useContext(BackEnd);

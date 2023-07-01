@@ -17,7 +17,7 @@ export const Event = ({
   description,
 }: EventProps) => {
   return (
-    <div className="p-8 text-opposite">
+    <div className="p-8 text-opposite border-b border-b-[#BDBDBD]">
       <div className="flex flex-row justify-between">
         <div className="text-[#BDBDBD] text-sm flex flex-row gap-3 items-center">
           <div className="flex flex-row items-center gap-1">
@@ -30,7 +30,7 @@ export const Event = ({
             <span>{endDate}</span>
           </div>
         </div>
-        <button className="border border-white px-4 py-0.5 rounded-lg font-bold">
+        <button className="border border-white px-4 py-0.5 rounded-lg font-bold hover-opacity-80">
           + Detalhes
         </button>
       </div>

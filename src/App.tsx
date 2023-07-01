@@ -1,17 +1,20 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import HomePage from './pages/HomePage';
-import NotFoundPage from './pages/NotFoundPage';
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import { BackEndProvider } from "./contexts/BackEndProvider";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+    <BackEndProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </BackEndProvider>
   );
 };
 
