@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { BackEndProvider } from "./contexts/BackEndProvider";
+import { Login } from "./pages/loginPage";
+import Register from "./pages/registerPage";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +16,8 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/*" element={<NotFoundPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register/>}/>
         </Routes>
       </BrowserRouter>
     </BackEndProvider>

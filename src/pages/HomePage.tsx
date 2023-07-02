@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 import { Event } from "../components/Event";
 import { LoadingIcon } from "../components/LoadingIcon";
 import { NavBar } from "../components/NavBar";
@@ -7,6 +6,8 @@ import { NavBar } from "../components/NavBar";
 import { useBackEnd } from "../contexts/BackEndProvider";
 
 import { format } from "date-fns";
+import { EventContext } from "../contexts/eventContext";
+import { UserContext } from "../contexts/userContext";
 
 type Selection = "Recentes" | "Sugeridos";
 
@@ -26,7 +27,8 @@ const HomePage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const { getHomeEvents, getHomeEventsRecommededUser } = useBackEnd()!;
+  const { getHomeEvents } = useContext(EventContext);
+  const {getUserEvents} = useContext(UserContext)
 
   useEffect(() => {
     loadHomeEvents();
@@ -40,7 +42,7 @@ const HomePage = () => {
   };
 
   const loadHomeEventsRecommededUser = async () => {
-    const events = await getHomeEventsRecommededUser("", currentPage, 10);
+    const events = await getUserEvents("", currentPage, 10);
 
     setCurrentEvents(events);
     setIsLoading(false);
