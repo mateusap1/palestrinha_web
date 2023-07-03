@@ -11,3 +11,27 @@ type PalestrinhaEvent = {
   startDate: string;
   endDate: string;
 };
+
+type User = {
+  name: string;
+  email: string;
+  registration: string;
+  token: string;
+};
+
+type BackEndResponse = {
+  success: boolean;
+};
+
+interface BackEndResponseFailure extends BackEndResponse {
+  error: string;
+}
+
+interface SignInResponseSuccess extends BackEndResponse {
+  name: string;
+  email: string;
+  registration: string;
+  token: string;
+}
+
+interface SignUpResponseSuccess extends BackEndResponse {}

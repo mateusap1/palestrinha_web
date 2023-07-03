@@ -3,14 +3,24 @@ import * as React from "react";
 import { createContext, useState, useContext, useEffect } from "react";
 
 import { sampleEvents1, sampleEvents2 } from "../misc/samples";
+import { useBackEnd } from "./BackEndProvider";
 
 type UserContext = {
-  getHomeEvents: (page: number, count: number) => Promise<PalestrinhaEvent[]>;
-  getHomeEventsRecommededUser: (
-    userEmail: string,
-    page: number,
-    count: number
-  ) => Promise<PalestrinhaEvent[]>;
+  isUserSignedIn: boolean;
+  user: User | null;
+  signIn: (
+    email: string,
+    password: string
+  ) => Promise<SignInResponseSuccess | BackEndResponseFailure>;
+  signUp: (
+    name: string,
+    email: string,
+    password: string,
+    registration: string,
+    department: string,
+    userType: string,
+    interestedSubAreas: string[]
+  ) => Promise<SignUpResponseSuccess | BackEndResponseFailure>;
 };
 
 type UserProviderProps = {
@@ -20,40 +30,57 @@ type UserProviderProps = {
 export const User = createContext<UserContext | null>(null);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const waitForDelay = (delay: number) => {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, delay);
-    });
+  const [user, setUser] = useState<User | null>(null);
+
+  const backEnd = useBackEnd()!;
+
+  const updateUser = (user: User) => {
+    setUser(user);
   };
 
-  const getHomeEvents = async (page: number, count: number) => {
-    await waitForDelay(500);
+  const signIn = async (email: string, password: string) => {
+    const response = await backEnd.signIn(email, password);
 
-    if ((page - 1) * count >= sampleEvents1.length) {
-      throw new Error("Unbounded page");
+    if (response.success) {
+      const successResponse = response as SignInResponseSuccess;
+
+      updateUser({
+        name: successResponse.name,
+        email: successResponse.email,
+        registration: successResponse.registration,
+        token: successResponse.token,
+      });
     }
 
-    return sampleEvents1.slice((page - 1) * count, count);
+    return response;
   };
 
-  const getHomeEventsRecommededUser = async (
-    userEmail: string,
-    page: number,
-    count: number
+  const signUp = async (
+    name: string,
+    email: string,
+    password: string,
+    registration: string,
+    department: string,
+    userType: string,
+    interestedSubAreas: string[]
   ) => {
-    await waitForDelay(500);
+    const response = await backEnd.signUp(
+      name,
+      email,
+      password,
+      registration,
+      department,
+      userType,
+      interestedSubAreas
+    );
 
-    if ((page - 1) * count >= sampleEvents1.length) {
-      throw new Error("Unbounded page");
-    }
-
-    return sampleEvents2.slice((page - 1) * count, count);
+    return response;
   };
 
   return (
-    <User.Provider value={{ getHomeEvents, getHomeEventsRecommededUser }}>
+    <User.Provider
+      value={{ user, isUserSignedIn: user !== null, signIn, signUp }}
+    >
       {children}
     </User.Provider>
   );

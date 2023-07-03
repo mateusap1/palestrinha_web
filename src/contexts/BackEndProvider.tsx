@@ -11,6 +11,19 @@ type BackEndContext = {
     page: number,
     count: number
   ) => Promise<PalestrinhaEvent[]>;
+  signIn: (
+    email: string,
+    password: string
+  ) => Promise<SignInResponseSuccess | BackEndResponseFailure>;
+  signUp: (
+    name: string,
+    email: string,
+    password: string,
+    registration: string,
+    department: string,
+    userType: string,
+    interestedSubAreas: string[]
+  ) => Promise<SignUpResponseSuccess | BackEndResponseFailure>;
 };
 
 type BackEndProviderProps = {
@@ -52,8 +65,36 @@ export const BackEndProvider = ({ children }: BackEndProviderProps) => {
     return sampleEvents2.slice((page - 1) * count, count);
   };
 
+  const signIn = async (email: string, password: string) => {
+    await waitForDelay(500);
+
+    return {
+      success: true,
+      name: "Alberto",
+      email: "alberto@email.com",
+      registration: "2200",
+      token: "token",
+    };
+  };
+
+  const signUp = async (
+    name: string,
+    email: string,
+    password: string,
+    registration: string,
+    department: string,
+    userType: string,
+    interestedSubAreas: string[]
+  ) => {
+    await waitForDelay(500);
+
+    return { success: true, token: "token" };
+  };
+
   return (
-    <BackEnd.Provider value={{ getHomeEvents, getHomeEventsRecommededUser }}>
+    <BackEnd.Provider
+      value={{ signIn, signUp, getHomeEvents, getHomeEventsRecommededUser }}
+    >
       {children}
     </BackEnd.Provider>
   );
