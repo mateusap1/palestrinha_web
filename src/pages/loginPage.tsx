@@ -49,6 +49,8 @@ const LoginPage = () => {
                         <input
                           className="p-4 bg-opposite-pale text-black rounded-lg"
                           placeholder="alberto@aluno.unb.br"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                       <div className="flex flex-col gap-4">
@@ -57,6 +59,8 @@ const LoginPage = () => {
                           type="password"
                           className="p-4 bg-opposite-pale text-black rounded-lg"
                           placeholder="**********"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                     </div>

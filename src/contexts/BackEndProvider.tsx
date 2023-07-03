@@ -3,8 +3,11 @@ import * as React from "react";
 import { createContext, useState, useContext, useEffect } from "react";
 
 import { sampleEvents1, sampleEvents2 } from "../misc/samples";
+import { AxiosInstance } from "axios";
 
 type BackEndContext = {
+  getDepartments: () => Promise<string[]>;
+  getSubAreas: () => Promise<SubArea[]>;
   getHomeEvents: (page: number, count: number) => Promise<PalestrinhaEvent[]>;
   getHomeEventsRecommededUser: (
     userEmail: string,
@@ -28,17 +31,30 @@ type BackEndContext = {
 
 type BackEndProviderProps = {
   children: JSX.Element;
+  axios: AxiosInstance;
 };
 
 export const BackEnd = createContext<BackEndContext | null>(null);
 
-export const BackEndProvider = ({ children }: BackEndProviderProps) => {
+export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
   const waitForDelay = (delay: number) => {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
         resolve();
       }, delay);
     });
+  };
+
+  const getDepartments = async (): Promise<string[]> => {
+    const response = await axios.get("/departamentos");
+
+    return response.data;
+  };
+
+  const getSubAreas = async (): Promise<SubArea[]> => {
+    const response = await axios.get("/subareas");
+
+    return response.data;
   };
 
   const getHomeEvents = async (page: number, count: number) => {
@@ -66,15 +82,26 @@ export const BackEndProvider = ({ children }: BackEndProviderProps) => {
   };
 
   const signIn = async (email: string, password: string) => {
-    await waitForDelay(500);
+    try {
+      const response = await axios.post("/user/login", {
+        email,
+        senha: password,
+      });
 
-    return {
-      success: true,
-      name: "Alberto",
-      email: "alberto@email.com",
-      registration: "2200",
-      token: "token",
-    };
+      return {
+        success: true,
+        name: response.data.nome,
+        email: response.data.email,
+        registration: response.data.matricula,
+        userType: response.data.tipo,
+        token: response.data.token,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error as string,
+      };
+    }
   };
 
   const signUp = async (
@@ -86,14 +113,38 @@ export const BackEndProvider = ({ children }: BackEndProviderProps) => {
     userType: string,
     interestedSubAreas: string[]
   ) => {
-    await waitForDelay(500);
+    try {
+      const response = await axios.post("/user/register", {
+        nome: name,
+        email: email,
+        senha: password,
+        matricula: registration,
+        departamento: department,
+        tipoUsuario: userType,
+        subAreasInteresse: interestedSubAreas,
+      });
 
-    return { success: true, token: "token" };
+      return {
+        success: true,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error as string,
+      };
+    }
   };
 
   return (
     <BackEnd.Provider
-      value={{ signIn, signUp, getHomeEvents, getHomeEventsRecommededUser }}
+      value={{
+        signIn,
+        signUp,
+        getHomeEvents,
+        getHomeEventsRecommededUser,
+        getDepartments,
+        getSubAreas,
+      }}
     >
       {children}
     </BackEnd.Provider>

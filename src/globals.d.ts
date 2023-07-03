@@ -12,10 +12,18 @@ type PalestrinhaEvent = {
   endDate: string;
 };
 
+type SubArea = {
+  nome: string;
+  tabelaId: string;
+};
+
+type UserType = "Tecnico" | "Docente" | "Graduacao" | "PosGraduacao";
+
 type User = {
   name: string;
   email: string;
   registration: string;
+  userType: UserType;
   token: string;
 };
 
@@ -31,6 +39,7 @@ interface SignInResponseSuccess extends BackEndResponse {
   name: string;
   email: string;
   registration: string;
+  userType: UserType;
   token: string;
 }
 

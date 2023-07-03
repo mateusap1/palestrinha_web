@@ -5,9 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 
-import { UserProvider } from "./contexts/UserProvider";
-import { BackEndProvider } from "./contexts/BackEndProvider";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -15,11 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <BackEndProvider>
-        <UserProvider>
-          <App />
-        </UserProvider>
-      </BackEndProvider>
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -48,6 +48,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         name: successResponse.name,
         email: successResponse.email,
         registration: successResponse.registration,
+        userType: successResponse.userType,
         token: successResponse.token,
       });
     }
