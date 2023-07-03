@@ -26,3 +26,10 @@ export const userSchema: any = z.object({
   tipo: TipoUsuarioSchema,
   subAreasInteresse: z.array(z.undefined()),
 });
+
+export const editUserSchema: any = z.object({
+  nome: z.string(),
+  email: z.string().email(),
+  senha: z.string(),
+  subAreasInteresse: z.array(z.undefined()),
+});
