@@ -5,6 +5,7 @@ import SearchPage from "../pages/SearchPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import CreateEventPage from "../pages/CreateEventPage";
 
 import Protected from "../components/Protected";
 import { useUser } from "../contexts/UserProvider";
@@ -22,12 +23,19 @@ export const RoutesMain = () => {
           </Protected>
         }
       />
-
       <Route
         path="/search"
         element={
           <Protected isLoggedIn={isUserSignedIn}>
             <SearchPage />
+          </Protected>
+        }
+      />
+      <Route
+        path="/create-event"
+        element={
+          <Protected isLoggedIn={isUserSignedIn}>
+            <CreateEventPage />
           </Protected>
         }
       />

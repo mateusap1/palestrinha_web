@@ -24,6 +24,18 @@ type BackEndContext = {
     department: string | null,
     relatedSubAreas: string[] | null
   ) => Promise<PalestrinhaEvent[]>;
+  createEvent: (
+    user: User,
+    name: string,
+    description: string,
+    eventType: EventType,
+    urlMoreInfo: string | null,
+    urlSubscribe: string | null,
+    departmentName: string,
+    startDate: Date,
+    endDate: Date,
+    realatedSubAreas: string[]
+  ) => Promise<void>;
   signIn: (
     email: string,
     password: string
@@ -47,14 +59,6 @@ type BackEndProviderProps = {
 export const BackEnd = createContext<BackEndContext | null>(null);
 
 export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
-  const waitForDelay = (delay: number) => {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, delay);
-    });
-  };
-
   const getDepartments = async (): Promise<string[]> => {
     const response = await axios.get("/departamentos");
 
@@ -224,6 +228,36 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
     }
   };
 
+  const createEvent = async (
+    user: User,
+    name: string,
+    description: string,
+    eventType: EventType,
+    urlMoreInfo: string | null,
+    urlSubscribe: string | null,
+    departmentName: string,
+    startDate: Date,
+    endDate: Date,
+    realatedSubAreas: string[]
+  ) => {
+    await axios.post("/event/create", {
+      nome: name,
+      descricao: description,
+      tipoEvento: eventType,
+      urlMaisInfo: urlMoreInfo,
+      urlInscricao: urlSubscribe,
+      criadorEmail: user.email,
+      departamentoNome: departmentName,
+      dataInicio: startDate.toString(),
+      dataFim: endDate.toString(),
+      subAreasRelacionadas: realatedSubAreas,
+    }, {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    });
+  };
+
   return (
     <BackEnd.Provider
       value={{
@@ -234,6 +268,7 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
         getDepartments,
         getSubAreas,
         getFilteredEvents,
+        createEvent
       }}
     >
       {children}

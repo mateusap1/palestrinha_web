@@ -431,7 +431,7 @@ const RegisterPage = () => {
                         onClick={() => moveToNextPage()}
                       >
                         {currentPage === "SubAreasInterest"
-                          ? "Confirmar"
+                          ? "Registrar Usuário"
                           : "Próximo"}
                       </button>
                     </div>

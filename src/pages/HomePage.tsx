@@ -122,20 +122,36 @@ const HomePage = () => {
               <div>
                 <Selector />
                 {currentEvents!.length === 0 && (
-                  <div className="mt-12 w-full text-center">Não existem eventos ainda :(</div>
+                  <div className="mt-12 w-full text-center">
+                    Não existem eventos ainda :(
+                  </div>
                 )}
                 <div>
-                  {currentEvents!.map(
-                    ({ publicId, startDate, endDate, name, description }) => (
-                      <Event
-                        publicId={publicId}
-                        startDate={formatDateString(startDate)}
-                        endDate={formatDateString(endDate)}
-                        name={name}
-                        description={description}
-                      />
-                    )
-                  )}
+                  <div className="flex justify-center">
+                    {(user!.userType === "Docente" ||
+                      user!.userType === "Tecnico") && (
+                      <button
+                        className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold"
+                        onClick={() => navigate("/create-event")}
+                      >
+                        Criar Evento
+                      </button>
+                    )}
+                    </div>
+
+                  <div>
+                    {currentEvents!.map(
+                      ({ publicId, startDate, endDate, name, description }) => (
+                        <Event
+                          publicId={publicId}
+                          startDate={formatDateString(startDate)}
+                          endDate={formatDateString(endDate)}
+                          name={name}
+                          description={description}
+                        />
+                      )
+                    )}
+                  </div>
                 </div>
               </div>
             )}
