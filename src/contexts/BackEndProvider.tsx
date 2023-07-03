@@ -8,14 +8,21 @@ import { AxiosInstance } from "axios";
 type BackEndContext = {
   getDepartments: () => Promise<string[]>;
   getSubAreas: () => Promise<SubArea[]>;
-  getHomeEvents: (
-    page: number,
-    count: number
-  ) => Promise<PalestrinhaEvent[]>;
+  getHomeEvents: (page: number, count: number) => Promise<PalestrinhaEvent[]>;
   getHomeEventsRecommededUser: (
     user: User,
     page: number,
     count: number
+  ) => Promise<PalestrinhaEvent[]>;
+  getFilteredEvents: (
+    page: number,
+    count: number,
+    nome: string | null,
+    eventType: EventType | null,
+    startDate: Date | null,
+    endDate: Date | null,
+    department: string | null,
+    relatedSubAreas: string[] | null
   ) => Promise<PalestrinhaEvent[]>;
   signIn: (
     email: string,
@@ -112,6 +119,57 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
     }));
   };
 
+  const getFilteredEvents = async (
+    page: number,
+    count: number,
+    name: string | null,
+    userType: EventType | null,
+    startDate: Date | null,
+    endDate: Date | null,
+    department: string | null,
+    relatedSubAreas: string[] | null
+  ): Promise<PalestrinhaEvent[]> => {
+    let filterString = `page=${page}&count=${count}`;
+    if (name) {
+      filterString += `&nome=${name}`;
+    }
+    if (userType) {
+      filterString += `&tipo=${userType}`;
+    }
+    if (startDate) {
+      filterString += `&dataInicio=${startDate}`;
+    }
+    if (endDate) {
+      filterString += `&dataFim=${endDate}`;
+    }
+    if (department) {
+      filterString += `&departamento="${department}"`;
+    }
+    if (relatedSubAreas) {
+      for (const subArea of relatedSubAreas) {
+        filterString += `&subAreasRelacionadas=${subArea}`;
+      }
+    }
+
+    const response = await axios.get(`/event/filtered?${filterString}`);
+
+    return response.data.map((evento: any) => ({
+      publicId: evento.publicId,
+      name: evento.nome,
+      description: evento.descricao,
+      eventType: evento.tipoEvento,
+      urlMoreInfo: evento.urlMaisInfo,
+      urlSubscribe: evento.urlInscricao,
+      creatorName: evento.criador.nome,
+      majorEvent: evento.eventoMaior,
+      relatedSubAreas: evento.subAreasRelacionadas.map(
+        ({ nome }: { nome: string }) => nome
+      ),
+      startDate: evento.dataInicio,
+      endDate: evento.dataFim,
+    }));
+  };
+
   const signIn = async (email: string, password: string) => {
     try {
       const response = await axios.post("/user/login", {
@@ -175,6 +233,7 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
         getHomeEventsRecommededUser,
         getDepartments,
         getSubAreas,
+        getFilteredEvents,
       }}
     >
       {children}

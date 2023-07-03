@@ -6,7 +6,7 @@ import { NavBar } from "../components/NavBar";
 import { useBackEnd } from "../contexts/BackEndProvider";
 
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useUser } from "../contexts/UserProvider";
 
 type Selection = "Recentes" | "Sugeridos";
@@ -27,20 +27,41 @@ const HomePage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const { getHomeEvents, getHomeEventsRecommededUser } = useBackEnd()!;
+  const { getHomeEvents, getFilteredEvents, getHomeEventsRecommededUser } =
+    useBackEnd()!;
   const { isUserSignedIn, user } = useUser()!;
 
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (isUserSignedIn) loadHomeEvents();
   }, []);
 
   const loadHomeEvents = async () => {
-    const events = await getHomeEvents(currentPage, 10);
+    if (searchParams) {
+      const dataInicio = searchParams.get("dataInicio");
+      const dataFim = searchParams.get("dataFim");
 
-    setCurrentEvents(events);
-    setIsLoading(false);
+      const events = await getFilteredEvents(
+        currentPage,
+        10,
+        searchParams.get("nome"),
+        searchParams.get("tipo") as EventType | null,
+        dataInicio ? new Date(dataInicio) : null,
+        dataFim ? new Date(dataFim) : null,
+        searchParams.get("departamento"),
+        searchParams.getAll("subAreasRelacionadas")
+      );
+
+      setCurrentEvents(events);
+      setIsLoading(false);
+    } else {
+      const events = await getHomeEvents(currentPage, 10);
+
+      setCurrentEvents(events);
+      setIsLoading(false);
+    }
   };
 
   const loadHomeEventsRecommededUser = async () => {
@@ -100,6 +121,9 @@ const HomePage = () => {
             ) : (
               <div>
                 <Selector />
+                {currentEvents!.length === 0 && (
+                  <div className="mt-12 w-full text-center">Não existem eventos ainda :(</div>
+                )}
                 <div>
                   {currentEvents!.map(
                     ({ publicId, startDate, endDate, name, description }) => (

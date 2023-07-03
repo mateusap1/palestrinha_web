@@ -182,11 +182,6 @@ const UserTypeDepartamentPage = ({
   );
 };
 
-type Option = {
-  value: string;
-  label: string;
-};
-
 type SubAreasInterestPageProps = {
   subAreas: MultiValue<Option>;
   setSubAreas: (subAreas: MultiValue<Option>) => void;
@@ -274,8 +269,7 @@ const RegisterPage = () => {
 
     return (
       emailRegex.test(email) &&
-      registrationRegex.test(registration) &&
-      name.length > 5
+      registrationRegex.test(registration)
     );
   };
 

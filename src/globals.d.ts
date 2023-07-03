@@ -17,6 +17,8 @@ type SubArea = {
   tabelaId: string;
 };
 
+type EventType = "EventoAcademico" | "EventoCultural"
+
 type UserType = "Tecnico" | "Docente" | "Graduacao" | "PosGraduacao";
 
 type User = {
@@ -44,3 +46,8 @@ interface SignInResponseSuccess extends BackEndResponse {
 }
 
 interface SignUpResponseSuccess extends BackEndResponse {}
+
+type Option = {
+  value: string;
+  label: string;
+};
