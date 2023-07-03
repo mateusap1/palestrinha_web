@@ -1,89 +1,59 @@
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
-// import { loginUserSchema } from "../schemas/userSchemas";
-import { ZodObject, ZodString, ZodTypeAny } from "zod";
-import { useContext } from "react";
-// import { UserContext } from "../contexts/UserContext";
 
 const LoginPage = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<ILogin>({
-  //   resolver: zodResolver(loginUserSchema),
-  // });
+  const navigate = useNavigate();
 
-  // const submit = (data: ILogin) => {
-  //   login(data);
-  // };
-
-  // const { login } = useContext(UserContext);
+  const submitLogin = () => {};
 
   return (
-    <div className="min-h-screen bg-secundary flex items-center justify-center">
-      <div className="max-w-md w-full mx-4">
-        <form
-          onSubmit={() => {}}
-          className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
-        >
-          <h2 className="text-2xl font-bold mb-8 text-center">Login</h2>
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Usuário
-            </label>
-            <input
-              id="username"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              title="Email"
-              type="text"
-              placeholder="Digite seu usuário"
-              // {...register("email")}
-            />
-            {/* {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-            )} */}
+    <div className="bg-secundary text-opposite min-h-screen">
+      <div className="flex justify-center w-full">
+        <div className="w-128">
+          <div className="w-full">
+            <div className="flex items-center h-screen w-full">
+              <div className="flex flex-col items-center w-full">
+                <h2 className="text-opposite font-bold text-5xl w-full mb-10">
+                  Login
+                </h2>
+
+                <div className="w-full">
+                  <div className="text-xl font-semibold w-full flex flex-col gap-8">
+                    <div className="flex flex-col gap-4 w-full">
+                      <span>Qual o seu e-mail acadêmico?</span>
+                      <input
+                        className="p-4 bg-opposite-pale text-black rounded-lg"
+                        placeholder="alberto@aluno.unb.br"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <span>Qual a sua senha?</span>
+                      <input
+                        type="password"
+                        className="p-4 bg-opposite-pale text-black rounded-lg"
+                        placeholder="**********"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full flex justify-between items-center">
+                    <button
+                      className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80"
+                      onClick={() => navigate("/register")}
+                    >
+                      Não tenho conta ainda
+                    </button>
+                    <button
+                      className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold"
+                      onClick={() => submitLogin()}
+                    >
+                      Confirmar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Senha
-            </label>
-            <input
-              id="password"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              title="Senha"
-              type="password"
-              placeholder="Digite sua senha"
-              // {...register("password")}
-            />
-            {/* {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-            )} */}
-          </div>
-          <button
-            type="submit"
-            className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Entrar
-          </button>
-        </form>
-        <p className="text-center text-gray-500 text-sm">
-          Ainda não possui conta?{" "}
-          <Link
-            className="text-opposite hover:text-primary-dark"
-            to="/register"
-          >
-            Cadastrar
-          </Link>
-        </p>
+        </div>
       </div>
     </div>
   );
