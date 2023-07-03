@@ -71,7 +71,7 @@ const SearchPage = () => {
       filterString += `&dataFim=${endDate}`;
     }
     if (department) {
-      filterString += `&departamento="${department.value}"`;
+      filterString += `&departamento=${department.value}`;
     }
     if (subAreas) {
       for (const subArea of subAreas) {
