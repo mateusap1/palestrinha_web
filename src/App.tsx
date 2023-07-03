@@ -6,7 +6,7 @@ import { RoutesMain } from "./routes";
 const App: React.FC = () => {
   return (
     <div>
-       <RoutesMain />
+      <RoutesMain />
       <ToastContainer
         position="top-right"
         autoClose={1000}

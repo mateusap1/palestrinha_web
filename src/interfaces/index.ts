@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { loginUserSchema } from "../schemas/userSchemas";
 
 export interface IUser {
   id: string;
@@ -14,8 +13,6 @@ export interface ILoginRequest {
   token: string;
   user: IUser;
 }
-
-export type ILogin = z.infer<typeof loginUserSchema>;
 
 export enum ITipoUsuario {
   Tecnico,

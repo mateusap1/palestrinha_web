@@ -10,6 +10,7 @@ module.exports = {
         primary: "#0C134F",
         secundary: "#0a0f40",
         opposite: "#FFFFFF",
+        "opposite-pale": "#DFDFDF",
       },
     },
   },

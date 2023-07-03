@@ -6,8 +6,6 @@ import { NavBar } from "../components/NavBar";
 import { useBackEnd } from "../contexts/BackEndProvider";
 
 import { format } from "date-fns";
-import { EventContext } from "../contexts/eventContext";
-import { UserContext } from "../contexts/userContext";
 
 type Selection = "Recentes" | "Sugeridos";
 
@@ -27,8 +25,7 @@ const HomePage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const { getHomeEvents } = useContext(EventContext);
-  const {getUserEvents} = useContext(UserContext)
+  const { getHomeEvents, getHomeEventsRecommededUser } = useBackEnd()!;
 
   useEffect(() => {
     loadHomeEvents();
@@ -42,7 +39,7 @@ const HomePage = () => {
   };
 
   const loadHomeEventsRecommededUser = async () => {
-    const events = await getUserEvents("", currentPage, 10);
+    const events = await getHomeEventsRecommededUser("", currentPage, 10);
 
     setCurrentEvents(events);
     setIsLoading(false);
@@ -50,15 +47,15 @@ const HomePage = () => {
 
   const selectSugeridos = () => {
     setIsLoading(true);
-    setSelected('Sugeridos');
+    setSelected("Sugeridos");
     loadHomeEventsRecommededUser();
-  }
+  };
 
   const selectRecentes = () => {
     setIsLoading(true);
-    setSelected('Recentes');
+    setSelected("Recentes");
     loadHomeEvents();
-  }
+  };
 
   const Selector = () => (
     <div className="flex flex-row justify-between items-center mx-32 mt-4 font-bold">

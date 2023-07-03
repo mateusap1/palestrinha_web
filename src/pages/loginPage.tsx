@@ -2,32 +2,31 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ILogin } from "../interfaces";
-import { loginUserSchema } from "../schemas/userSchemas";
+// import { loginUserSchema } from "../schemas/userSchemas";
 import { ZodObject, ZodString, ZodTypeAny } from "zod";
 import { useContext } from "react";
-import { UserContext } from "../contexts/userContext";
+// import { UserContext } from "../contexts/UserContext";
 
-export const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ILogin>({
-    resolver: zodResolver(loginUserSchema),
-  });
+const LoginPage = () => {
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<ILogin>({
+  //   resolver: zodResolver(loginUserSchema),
+  // });
 
-  const submit = (data: ILogin) => {
-    login(data);
-  };
+  // const submit = (data: ILogin) => {
+  //   login(data);
+  // };
 
-  const { login } = useContext(UserContext);
+  // const { login } = useContext(UserContext);
 
   return (
     <div className="min-h-screen bg-secundary flex items-center justify-center">
       <div className="max-w-md w-full mx-4">
         <form
-          onSubmit={handleSubmit(submit)}
+          onSubmit={() => {}}
           className="bg-white rounded shadow-md px-8 pt-6 pb-8 mb-4"
         >
           <h2 className="text-2xl font-bold mb-8 text-center">Login</h2>
@@ -44,11 +43,11 @@ export const Login = () => {
               title="Email"
               type="text"
               placeholder="Digite seu usuário"
-              {...register("email")}
+              // {...register("email")}
             />
-            {errors.email && (
+            {/* {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-            )}
+            )} */}
           </div>
           <div className="mb-6">
             <label
@@ -63,11 +62,11 @@ export const Login = () => {
               title="Senha"
               type="password"
               placeholder="Digite sua senha"
-              {...register("password")}
+              // {...register("password")}
             />
-            {errors.password && (
+            {/* {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-            )}
+            )} */}
           </div>
           <button
             type="submit"
@@ -89,3 +88,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default LoginPage;
