@@ -6,6 +6,8 @@ import { NavBar } from "../components/NavBar";
 import { useBackEnd } from "../contexts/BackEndProvider";
 
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../contexts/UserProvider";
 
 type Selection = "Recentes" | "Sugeridos";
 
@@ -26,9 +28,12 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const { getHomeEvents, getHomeEventsRecommededUser } = useBackEnd()!;
+  const { isUserSignedIn, user } = useUser()!;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    loadHomeEvents();
+    if (isUserSignedIn) loadHomeEvents();
   }, []);
 
   const loadHomeEvents = async () => {
@@ -39,7 +44,7 @@ const HomePage = () => {
   };
 
   const loadHomeEventsRecommededUser = async () => {
-    const events = await getHomeEventsRecommededUser("", currentPage, 10);
+    const events = await getHomeEventsRecommededUser(user!, currentPage, 10);
 
     setCurrentEvents(events);
     setIsLoading(false);

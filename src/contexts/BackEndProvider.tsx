@@ -8,9 +8,12 @@ import { AxiosInstance } from "axios";
 type BackEndContext = {
   getDepartments: () => Promise<string[]>;
   getSubAreas: () => Promise<SubArea[]>;
-  getHomeEvents: (page: number, count: number) => Promise<PalestrinhaEvent[]>;
+  getHomeEvents: (
+    page: number,
+    count: number
+  ) => Promise<PalestrinhaEvent[]>;
   getHomeEventsRecommededUser: (
-    userEmail: string,
+    user: User,
     page: number,
     count: number
   ) => Promise<PalestrinhaEvent[]>;
@@ -57,28 +60,56 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
     return response.data;
   };
 
-  const getHomeEvents = async (page: number, count: number) => {
-    await waitForDelay(500);
+  const getHomeEvents = async (
+    page: number,
+    count: number
+  ): Promise<PalestrinhaEvent[]> => {
+    const response = await axios.get(`/event?page=${page}&count=${count}`);
 
-    if ((page - 1) * count >= sampleEvents1.length) {
-      throw new Error("Unbounded page");
-    }
-
-    return sampleEvents1.slice((page - 1) * count, count);
+    return response.data.map((evento: any) => ({
+      publicId: evento.publicId,
+      name: evento.nome,
+      description: evento.descricao,
+      eventType: evento.tipoEvento,
+      urlMoreInfo: evento.urlMaisInfo,
+      urlSubscribe: evento.urlInscricao,
+      creatorName: evento.criador.nome,
+      majorEvent: evento.eventoMaior,
+      relatedSubAreas: evento.subAreasRelacionadas.map(
+        ({ nome }: { nome: string }) => nome
+      ),
+      startDate: evento.dataInicio,
+      endDate: evento.dataFim,
+    }));
   };
 
   const getHomeEventsRecommededUser = async (
-    userEmail: string,
+    user: User,
     page: number,
     count: number
   ) => {
-    await waitForDelay(500);
+    const response = await axios.get(
+      `/user/events/${user.email}?page=${page}&count=${count}`,
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
 
-    if ((page - 1) * count >= sampleEvents1.length) {
-      throw new Error("Unbounded page");
-    }
-
-    return sampleEvents2.slice((page - 1) * count, count);
+    return response.data.map((evento: any) => ({
+      publicId: evento.publicId,
+      name: evento.nome,
+      description: evento.descricao,
+      eventType: evento.tipoEvento,
+      urlMoreInfo: evento.urlMaisInfo,
+      urlSubscribe: evento.urlInscricao,
+      creatorName: evento.criador.nome,
+      majorEvent: evento.eventoMaior,
+      relatedSubAreas: evento.subAreasRelacionadas.map(
+        ({ nome }: { nome: string }) => nome
+      ),
+      startDate: evento.dataInicio,
+      endDate: evento.dataFim,
+    }));
   };
 
   const signIn = async (email: string, password: string) => {
