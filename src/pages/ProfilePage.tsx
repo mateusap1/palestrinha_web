@@ -194,7 +194,7 @@ const ProfilePage = () => {
                 </div>
               </div>
               <br></br>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center divide-y">
                 <div className="flex flex-col items-center gap-8">
                   <h3>Sobrenome</h3>
                 </div>
@@ -203,7 +203,7 @@ const ProfilePage = () => {
                 </div>
               </div>
               <br></br>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center divide-y">
                 <div className="flex flex-col items-center gap-8">
                   <h3>Email</h3>
                 </div>
@@ -212,7 +212,7 @@ const ProfilePage = () => {
                 </div>
               </div>
               <br></br>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center divide-y">
                 <div className="flex flex-col items-center gap-8">
                   <h3>Cargo</h3>
                 </div>
@@ -221,7 +221,7 @@ const ProfilePage = () => {
                 </div>
               </div>
               <br></br>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center divide-y">
                 <div className="flex flex-col items-center gap-8">
                   <h3>Departamento</h3>
                 </div>
@@ -230,7 +230,7 @@ const ProfilePage = () => {
                 </div>
               </div>
               <br></br>
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center divide-y">
                 <div className="flex flex-col items-center gap-8">
                   <h3>Celular</h3>
                 </div>
