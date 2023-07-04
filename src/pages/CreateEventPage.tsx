@@ -159,8 +159,8 @@ const CreateEventPage = () => {
 
   return (
     <>
-      <div className="bg-secundary text-opposite min-h-screen">
-        <div className="flex justify-center w-full">
+      <div className="bg-secundary text-opposite min-h-screen flex justify-center">
+        <div className="flex justify-center w-full max-md:w-80">
           <div className="w-128">
             <div>
               <div className="mt-8 mx-8">
@@ -303,9 +303,9 @@ const CreateEventPage = () => {
                       </div>
                     )}
                   </div>
-                  <div className="w-full flex justify-between items-center">
+                  <div className="w-full flex justify-between items-center max-md:flex-col-reverse">
                     <button
-                      className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80"
+                      className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80 max-md:w-60"
                       onClick={() => moveToPreviousPage()}
                     >
                       {currentPage !== "EventType"
@@ -313,7 +313,7 @@ const CreateEventPage = () => {
                         : "Voltar Para Home"}
                     </button>
                     <button
-                      className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold"
+                      className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold max-md:w-60"
                       onClick={() => moveToNextPage()}
                     >
                       {currentPage === "SubAreas" ? "Criar Evento" : "Próximo"}

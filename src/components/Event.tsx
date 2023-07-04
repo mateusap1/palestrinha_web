@@ -17,8 +17,8 @@ export const Event = ({
   description,
 }: EventProps) => {
   return (
-    <div className="p-8 text-opposite border-b border-b-[#BDBDBD]">
-      <div className="flex flex-row justify-between">
+    <div className=" pb-4 text-opposite border-b border-b-[#BDBDBD] max-md:flex max-md:flex-col-reverse">
+      <div className="flex flex-row justify-between gap-4">
         <div className="text-[#BDBDBD] text-sm flex flex-row gap-3 items-center">
           <div className="flex flex-row items-center gap-1">
             <MdOutlineCalendarToday />
@@ -31,12 +31,12 @@ export const Event = ({
           </div>
         </div>
         <button className="border border-white px-4 py-0.5 rounded-lg font-bold hover-opacity-80">
-          + Detalhes
+          Info
         </button>
       </div>
       <div className="mt-4">
         <h1 className="font-extrabold text-xl">{name}</h1>
-        <p className="mt-2 text-sm text-[#DFDFDF]">{description}</p>
+        <p className="mt-2 text-sm text-[#DFDFDF] mb-8">{description}</p>
       </div>
     </div>
   );

@@ -3,8 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import SearchPage from "../pages/SearchPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
+import LoginPage from "../pages/loginPage";
+import RegisterPage from "../pages/registerPage";
 import CreateEventPage from "../pages/CreateEventPage";
 
 import Protected from "../components/Protected";

@@ -98,8 +98,8 @@ const SearchPage = () => {
 
   return (
     <div className="bg-secundary text-opposite min-h-screen">
-      <div className="flex justify-center w-full">
-        <div className="w-128">
+      <div className="flex justify-center w-full ">
+        <div className="w-128 max-md:w-80">
           {isLoading ? (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
               <div className="w-20 h-20">
@@ -195,15 +195,15 @@ const SearchPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-full flex justify-between items-center">
+              <div className="w-full flex justify-between items-center max-md:flex-col-reverse">
                 <button
-                  className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80"
+                  className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80 max-md:w-60"
                   onClick={() => clearFilters()}
                 >
                   Limpar
                 </button>
                 <button
-                  className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold"
+                  className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold max-md:w-60"
                   onClick={() => searchFilters()}
                 >
                   Buscar
