@@ -45,7 +45,7 @@ const HomePage = () => {
 
       const events = await getFilteredEvents(
         currentPage,
-        10,
+        100,
         searchParams.get("nome"),
         searchParams.get("tipo") as EventType | null,
         dataInicio ? new Date(dataInicio) : null,
@@ -57,7 +57,7 @@ const HomePage = () => {
       setCurrentEvents(events);
       setIsLoading(false);
     } else {
-      const events = await getHomeEvents(currentPage, 10);
+      const events = await getHomeEvents(currentPage, 100);
 
       setCurrentEvents(events);
       setIsLoading(false);
@@ -65,7 +65,7 @@ const HomePage = () => {
   };
 
   const loadHomeEventsRecommededUser = async () => {
-    const events = await getHomeEventsRecommededUser(user!, currentPage, 10);
+    const events = await getHomeEventsRecommededUser(user!, currentPage, 100);
 
     setCurrentEvents(events);
     setIsLoading(false);
