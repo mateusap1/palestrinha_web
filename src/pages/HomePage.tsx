@@ -84,19 +84,17 @@ const HomePage = () => {
   };
 
   const Selector = () => (
-    <div className="flex flex-row justify-between items-center mx-32 mt-4 font-bold">
+    <div className="flex flex-row justify-center items-center mx-32 mt-6 font-bold gap-10">
       <span
-        className={`${
-          selected === "Recentes" ? "border-b-2 p-2" : ""
-        } hover:cursor-pointer`}
+        className={`${selected === "Recentes" ? "border-b-2" : ""
+          } hover:cursor-pointer`}
         onClick={selectRecentes}
       >
         Recentes
       </span>
       <span
-        className={`${
-          selected === "Sugeridos" ? "border-b-2 p-2" : ""
-        } hover:cursor-pointer`}
+        className={`${selected === "Sugeridos" ? "border-b-2" : ""
+          } hover:cursor-pointer`}
         onClick={selectSugeridos}
       >
         Sugeridos
@@ -106,8 +104,8 @@ const HomePage = () => {
 
   return (
     <div className="bg-secundary text-opposite min-h-screen">
-      <div className="flex justify-center w-full">
-        <div className="w-128">
+      <div className="flex justify-center w-full h-full">
+        <div className="w-128 max-md:w-80">
           <div>
             <div className="mt-8 mx-8">
               <NavBar selected={"Home"} />
@@ -130,14 +128,14 @@ const HomePage = () => {
                   <div className="flex justify-center">
                     {(user!.userType === "Docente" ||
                       user!.userType === "Tecnico") && (
-                      <button
-                        className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold"
-                        onClick={() => navigate("/create-event")}
-                      >
-                        Criar Evento
-                      </button>
-                    )}
-                    </div>
+                        <button
+                          className="border-2 border-white px-6 py-1 mt-8 mb-8 rounded-full font-semibold"
+                          onClick={() => navigate("/create-event")}
+                        >
+                          Criar Evento
+                        </button>
+                      )}
+                  </div>
 
                   <div>
                     {currentEvents!.map(

@@ -34,7 +34,7 @@ const LoginPage = () => {
     <>
       <div className="bg-secundary text-opposite min-h-screen">
         <div className="flex justify-center w-full">
-          <div className="w-128">
+          <div className="w-128 max-md:w-80">
             <div className="w-full">
               <div className="flex items-center h-screen w-full">
                 <div className="flex flex-col items-center w-full">
@@ -64,20 +64,20 @@ const LoginPage = () => {
                         />
                       </div>
                     </div>
-                    <div className="w-full flex justify-between items-center">
+                    <div className="w-full flex justify-between items-center max-md:flex-col-reverse">
                       <button
-                        className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80"
+                        className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80 max-md:w-60"
                         onClick={() => navigate("/register")}
                       >
                         Não tenho conta ainda
                       </button>
                       {isLoading ? (
-                        <button className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80">
+                        <button className="border-2 border-white px-6 py-1 mt-8 rounded-full font-semibold opacity-80 ">
                           Loading...
                         </button>
                       ) : (
                         <button
-                          className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold"
+                          className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold max-md:w-60"
                           onClick={() => submitLogin()}
                         >
                           Confirmar
