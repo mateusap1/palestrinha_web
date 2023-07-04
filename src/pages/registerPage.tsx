@@ -204,7 +204,7 @@ const SubAreasInterestPage = ({
           value={subAreas}
           onChange={(values) => setSubAreas(values)}
           options={initialSubAreas.map((subArea) => ({
-            value: subArea.tabelaId,
+            value: subArea.nome,
             label: subArea.nome,
           }))}
         />

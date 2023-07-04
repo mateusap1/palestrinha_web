@@ -295,7 +295,7 @@ const CreateEventPage = () => {
                             value={eventSubAreas}
                             onChange={(values) => setEventSubAreas(values)}
                             options={initialSubAreas?.map((subArea) => ({
-                              value: subArea.tabelaId,
+                              value: subArea.nome,
                               label: subArea.nome,
                             }))}
                           />
