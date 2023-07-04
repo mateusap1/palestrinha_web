@@ -8,6 +8,7 @@ import { LoadingIcon } from "../components/LoadingIcon";
 
 import { useUser } from "../contexts/UserProvider";
 import { useBackEnd } from "../contexts/BackEndProvider";
+import { toast } from "react-toastify";
 
 type NameEmailRegistrationPageProps = {
   name: string;
@@ -352,9 +353,11 @@ const RegisterPage = () => {
 
     if (result.success) {
       navigate("/login");
+      toast.success('Conta criada com sucesso!')
     } else {
       const failureResult = result as BackEndResponseFailure;
       console.log(failureResult.error);
+      toast.error('Ops! Ocorreu um erro')
       // setError(failureResult.error);
     }
   };
@@ -442,9 +445,9 @@ const RegisterPage = () => {
           </div>
         </div>
       </div>
-      <Modal isOpen={error !== null} onClose={() => setError(null)}>
+      {/* <Modal isOpen={error !== null} onClose={() => setError(null)}>
         {error}
-      </Modal>
+      </Modal> */}
     </>
   );
 };

@@ -12,6 +12,7 @@ import { Modal } from "../components/Modal";
 
 import Select, { SingleValue, MultiValue } from "react-select";
 import DatePicker from "react-datepicker";
+import { toast } from "react-toastify";
 
 type CurrentPage =
   | "EventType"
@@ -102,9 +103,14 @@ const CreateEventPage = () => {
       eventSubAreas.map(({ value }) => value)
     )
       .then(() => {
+        navigate("/");
+        toast.success("Evento criado com sucesso!");
         setSuccess("Evento criado com sucesso");
       })
-      .catch((error) => setError(error));
+      .catch((error) => {
+        toast.error("Falha ao criar evento");
+        setError(error);
+      });
   };
 
   const moveToNextPage = () => {
@@ -271,7 +277,9 @@ const CreateEventPage = () => {
                     ) : currentPage === "Department" ? (
                       <div className="text-xl font-semibold w-full flex flex-col gap-8">
                         <div className="flex flex-col gap-4">
-                          <span>Qual é o seu departamento?</span>
+                          <span>
+                            Seu evento está relacionado a qual departamento?
+                          </span>
                           <Select
                             className="text-black rounded-lg"
                             classNamePrefix="bg-opposite-pale"
@@ -287,7 +295,7 @@ const CreateEventPage = () => {
                     ) : (
                       <div className="text-xl font-semibold w-full flex flex-col gap-8">
                         <div className="flex flex-col gap-4">
-                          <span>Quais sub-áreas mais te interessam?</span>
+                          <span>Quais os assuntos deste evento?</span>
                           <Select
                             className="text-black rounded-lg"
                             classNamePrefix="bg-opposite-pale"
@@ -325,18 +333,18 @@ const CreateEventPage = () => {
           </div>
         </div>
       </div>
-      <Modal isOpen={error !== null} onClose={() => setError(null)}>
+      {/* <Modal isOpen={error !== null} onClose={() => setError(null)}>
         {error}
       </Modal>
       <Modal
         isOpen={success !== null}
         onClose={() => {
           setSuccess(null);
-          navigate("/");
+          
         }}
       >
         {success}
-      </Modal>
+      </Modal> */}
     </>
   );
 };

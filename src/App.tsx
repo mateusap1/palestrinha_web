@@ -12,6 +12,18 @@ const baseAxios = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
 const App: React.FC = () => {
   return (
     <div>
+         <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <BackEndProvider axios={baseAxios}>
         <UserProvider>
           <RoutesMain />

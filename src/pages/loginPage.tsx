@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Modal } from "../components/Modal";
 import { useUser } from "../contexts/UserProvider";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -20,10 +21,11 @@ const LoginPage = () => {
     const response = await signIn(email, password);
 
     if (response.success) {
+      toast.success("Login bem sucedido!");
       navigate("/");
     } else {
       const responseFailure = response as BackEndResponseFailure;
-
+      toast.error("E-mail ou senha inválidos!");
       setError(`Server failed with error:  ${responseFailure.error}`);
     }
 
@@ -92,9 +94,9 @@ const LoginPage = () => {
         </div>
       </div>
 
-      <Modal isOpen={error !== null} onClose={() => setError(null)}>
+      {/*   <Modal isOpen={error !== null} onClose={() => setError(null)}>
         {error}
-      </Modal>
+      </Modal> */}
     </>
   );
 };
