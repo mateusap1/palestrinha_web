@@ -104,7 +104,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-secundary text-opposite min-h-screen">
-      <div className="flex justify-center w-full h-screen">
+      <div className="flex justify-center w-full h-full">
         <div className="w-128 max-md:w-80">
           <div>
             <div className="mt-8 mx-8">
