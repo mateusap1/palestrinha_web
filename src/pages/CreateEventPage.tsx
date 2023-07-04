@@ -271,7 +271,7 @@ const CreateEventPage = () => {
                     ) : currentPage === "Department" ? (
                       <div className="text-xl font-semibold w-full flex flex-col gap-8">
                         <div className="flex flex-col gap-4">
-                          <span>Qual é o seu departamento?</span>
+                          <span>Qual é o departamento desse evento?</span>
                           <Select
                             className="text-black rounded-lg"
                             classNamePrefix="bg-opposite-pale"
@@ -287,7 +287,7 @@ const CreateEventPage = () => {
                     ) : (
                       <div className="text-xl font-semibold w-full flex flex-col gap-8">
                         <div className="flex flex-col gap-4">
-                          <span>Quais sub-áreas mais te interessam?</span>
+                          <span>Quais sub-áreas estão relacionadas a esse evento?</span>
                           <Select
                             className="text-black rounded-lg"
                             classNamePrefix="bg-opposite-pale"
