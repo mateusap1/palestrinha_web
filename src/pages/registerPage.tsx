@@ -267,10 +267,7 @@ const RegisterPage = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const registrationRegex = /^\d+$/;
 
-    return (
-      emailRegex.test(email) &&
-      registrationRegex.test(registration)
-    );
+    return emailRegex.test(email) && registrationRegex.test(registration);
   };
 
   const isValidPassword = () => {
@@ -288,24 +285,17 @@ const RegisterPage = () => {
   const moveToPreviousPage = () => {
     switch (currentPage) {
       case "Name/Email/Registration":
-        if (isValidNameEmailRegistration()) {
-          navigate("/login");
-        }
+        navigate("/login");
+
         break;
       case "Password":
-        if (isValidPassword()) {
-          setCurrentPage("Name/Email/Registration");
-        }
+        setCurrentPage("Name/Email/Registration");
         break;
       case "UserType/Departament":
-        if (isValidUserTypeDepartament()) {
-          setCurrentPage("Password");
-        }
+        setCurrentPage("Password");
         break;
       case "SubAreasInterest":
-        if (isValidSubAreasInterest()) {
-          setCurrentPage("UserType/Departament");
-        }
+        setCurrentPage("UserType/Departament");
         break;
       default:
         return <></>;

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { MdOutlineCalendarToday } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 type EventProps = {
   publicId: string;
@@ -11,13 +12,16 @@ type EventProps = {
 };
 
 export const Event = ({
+  publicId,
   startDate,
   endDate,
   name,
   description,
 }: EventProps) => {
+  const navigate = useNavigate();
+
   return (
-    <div className=" pb-4 text-opposite border-b border-b-[#BDBDBD] max-md:flex max-md:flex-col-reverse">
+    <div className="p-4 pb-4 text-opposite border-b border-b-[#BDBDBD] max-md:flex max-md:flex-col-reverse">
       <div className="flex flex-row justify-between gap-4">
         <div className="text-[#BDBDBD] text-sm flex flex-row gap-3 items-center">
           <div className="flex flex-row items-center gap-1">
@@ -30,7 +34,10 @@ export const Event = ({
             <span>{endDate}</span>
           </div>
         </div>
-        <button className="border border-white px-4 py-0.5 rounded-lg font-bold hover-opacity-80">
+        <button
+          onClick={() => navigate(`/event/${publicId}`)}
+          className="border border-white px-4 py-0.5 rounded-lg font-bold hover-opacity-80"
+        >
           Info
         </button>
       </div>

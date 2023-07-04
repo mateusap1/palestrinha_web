@@ -2,16 +2,9 @@ import React from "react";
 
 import { NavBar } from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../contexts/UserProvider";
 
-const NotFoundPage: React.FC = () => {
-  const { logOut } = useUser()!;
+const EventPage: React.FC = () => {
   const navigate = useNavigate();
-
-  const logOff = () => {
-    logOut();
-    navigate("/login");
-  };
 
   return (
     <div className="bg-secundary text-opposite min-h-screen">
@@ -19,7 +12,7 @@ const NotFoundPage: React.FC = () => {
         <div className="w-128 max-md:w-80">
           <div>
             <div className="mt-8 mx-8">
-              <NavBar selected={"Profile"} />
+              <NavBar selected={"Home"} />
             </div>
             <div className="container mx-auto py-8">
               <div>
@@ -27,12 +20,12 @@ const NotFoundPage: React.FC = () => {
                 <p className="text-lg mt-4">
                   A página que você acessou está em construção
                 </p>
-                  <button
-                    className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold max-md:w-60"
-                    onClick={() => logOff()}
-                  >
-                    Sair da conta
-                  </button>
+                <button
+                  onClick={() => navigate("/")}
+                  className="text-black bg-white px-6 py-1 mt-8 rounded-full font-semibold max-md:w-60"
+                >
+                  Voltar para Home
+                </button>
               </div>
             </div>
           </div>
@@ -42,4 +35,4 @@ const NotFoundPage: React.FC = () => {
   );
 };
 
-export default NotFoundPage;
+export default EventPage;

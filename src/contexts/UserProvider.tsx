@@ -8,6 +8,7 @@ import { useBackEnd } from "./BackEndProvider";
 type UserContext = {
   isUserSignedIn: boolean;
   user: User | null;
+  isLoaded: boolean;
   signIn: (
     email: string,
     password: string
@@ -21,6 +22,7 @@ type UserContext = {
     userType: string,
     interestedSubAreas: string[]
   ) => Promise<SignUpResponseSuccess | BackEndResponseFailure>;
+  logOut: () => void;
 };
 
 type UserProviderProps = {
@@ -32,10 +34,33 @@ export const User = createContext<UserContext | null>(null);
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const backEnd = useBackEnd()!;
 
+  useEffect(() => {
+    retrieveUser();
+  }, []);
+
+  const retrieveUser = () => {
+    const user = localStorage.getItem("@user");
+
+    if (user !== null) {
+      updateUser(JSON.parse(user) as User);
+    }
+
+    setIsLoaded(true);
+  };
+
   const updateUser = (user: User) => {
+    localStorage.setItem("@user", JSON.stringify(user));
+
     setUser(user);
+  };
+
+  const logOut = () => {
+    localStorage.removeItem("@user");
+    setUser(null);
   };
 
   const signIn = async (email: string, password: string) => {
@@ -80,7 +105,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   return (
     <User.Provider
-      value={{ user, isUserSignedIn: user !== null, signIn, signUp }}
+      value={{
+        isLoaded,
+        user,
+        isUserSignedIn: user !== null,
+        signIn,
+        signUp,
+        logOut,
+      }}
     >
       {children}
     </User.Provider>
