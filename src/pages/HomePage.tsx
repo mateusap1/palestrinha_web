@@ -139,13 +139,14 @@ const HomePage = () => {
 
                   <div>
                     {currentEvents!.map(
-                      ({ publicId, startDate, endDate, name, description }) => (
+                      ({ publicId, startDate, endDate, name, description, relatedSubAreas }) => (
                         <Event
                           publicId={publicId}
                           startDate={formatDateString(startDate)}
                           endDate={formatDateString(endDate)}
                           name={name}
                           description={description}
+                          subAreas={relatedSubAreas}
                         />
                       )
                     )}

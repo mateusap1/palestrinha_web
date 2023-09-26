@@ -8,6 +8,7 @@ import { LoadingIcon } from "../components/LoadingIcon";
 
 import { useUser } from "../contexts/UserProvider";
 import { useBackEnd } from "../contexts/BackEndProvider";
+import { toast } from "react-toastify";
 
 type NameEmailRegistrationPageProps = {
   name: string;
@@ -271,7 +272,9 @@ const RegisterPage = () => {
   };
 
   const isValidPassword = () => {
-    return password === confirmPassword;
+    if (password.length >= 10 && password === confirmPassword) return true;
+
+    return false;
   };
 
   const isValidUserTypeDepartament = () => {
@@ -279,7 +282,7 @@ const RegisterPage = () => {
   };
 
   const isValidSubAreasInterest = () => {
-    return true;
+    return interestedSubAreas.length > 0;
   };
 
   const moveToPreviousPage = () => {
@@ -307,21 +310,29 @@ const RegisterPage = () => {
       case "Name/Email/Registration":
         if (isValidNameEmailRegistration()) {
           setCurrentPage("Password");
+        } else {
+          toast.error("Nome, email ou matrícula incorretos.");
         }
         break;
       case "Password":
         if (isValidPassword()) {
           setCurrentPage("UserType/Departament");
+        } else {
+          toast.error("Senha inválida (mínimo de 10 caracteres).");
         }
         break;
       case "UserType/Departament":
         if (isValidUserTypeDepartament()) {
           setCurrentPage("SubAreasInterest");
+        } else {
+          toast.error("Selecione o seu departamento.");
         }
         break;
       case "SubAreasInterest":
         if (isValidSubAreasInterest()) {
           registerUser();
+        } else {
+          toast.error("Selecione pelo menos uma sub-área de interesse.");
         }
         break;
       default:
@@ -345,7 +356,7 @@ const RegisterPage = () => {
     } else {
       const failureResult = result as BackEndResponseFailure;
       console.log(failureResult.error);
-      // setError(failureResult.error);
+      setError(`Servidor falhou com erro: ${failureResult.error}`);
     }
   };
 

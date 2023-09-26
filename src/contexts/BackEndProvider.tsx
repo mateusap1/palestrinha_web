@@ -189,11 +189,18 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
         userType: response.data.tipo,
         token: response.data.token,
       };
-    } catch (error) {
-      return {
-        success: false,
-        error: error as string,
-      };
+    } catch (error: any) {
+      if (error?.response?.data?.error) {
+        return {
+          success: false,
+          error: error.response.data.error as string,
+        };
+      } else {
+        return {
+          success: false,
+          error: error as string,
+        };
+      }
     }
   };
 
@@ -220,11 +227,18 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
       return {
         success: true,
       };
-    } catch (error) {
-      return {
-        success: false,
-        error: error as string,
-      };
+    } catch (error: any) {
+      if (error?.response?.data?.error) {
+        return {
+          success: false,
+          error: error.response.data.error as string,
+        };
+      } else {
+        return {
+          success: false,
+          error: error as string,
+        };
+      }
     }
   };
 
@@ -240,22 +254,26 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
     endDate: Date,
     realatedSubAreas: string[]
   ) => {
-    await axios.post("/event/create", {
-      nome: name,
-      descricao: description,
-      tipoEvento: eventType,
-      urlMaisInfo: urlMoreInfo,
-      urlInscricao: urlSubscribe,
-      criadorEmail: user.email,
-      departamentoNome: departmentName,
-      dataInicio: startDate.toString(),
-      dataFim: endDate.toString(),
-      subAreasRelacionadas: realatedSubAreas,
-    }, {
-      headers: {
-        Authorization: `Bearer ${user.token}`
+    await axios.post(
+      "/event/create",
+      {
+        nome: name,
+        descricao: description,
+        tipoEvento: eventType,
+        urlMaisInfo: urlMoreInfo,
+        urlInscricao: urlSubscribe,
+        criadorEmail: user.email,
+        departamentoNome: departmentName,
+        dataInicio: startDate.toString(),
+        dataFim: endDate.toString(),
+        subAreasRelacionadas: realatedSubAreas,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       }
-    });
+    );
   };
 
   return (
@@ -268,7 +286,7 @@ export const BackEndProvider = ({ children, axios }: BackEndProviderProps) => {
         getDepartments,
         getSubAreas,
         getFilteredEvents,
-        createEvent
+        createEvent,
       }}
     >
       {children}

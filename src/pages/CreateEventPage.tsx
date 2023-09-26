@@ -12,6 +12,7 @@ import { Modal } from "../components/Modal";
 
 import Select, { SingleValue, MultiValue } from "react-select";
 import DatePicker from "react-datepicker";
+import { toast } from "react-toastify";
 
 type CurrentPage =
   | "EventType"
@@ -68,6 +69,42 @@ const CreateEventPage = () => {
     setIsLoading(false);
   };
 
+  const validNameDescription = () => {
+    if (eventName.length > 3 && eventDescription.length > 3) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const validLinks = () => {
+    return true;
+  };
+
+  const validDates = () => {
+    if (eventStartDate !== null && eventEndDate !== null) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const validDepartment = () => {
+    if (eventDepartment !== null) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const validSubAreas = () => {
+    if (eventSubAreas.length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
   const submitCreateEvent = async () => {
     if (eventType === null) {
       setError("Você precisa selecionar um tipo de evento!");
@@ -113,19 +150,39 @@ const CreateEventPage = () => {
         setCurrentPage("NameDescription");
         break;
       case "NameDescription":
-        setCurrentPage("Urls");
+        if (validNameDescription()) {
+          setCurrentPage("Urls");
+        } else {
+          toast.error("Nome ou descrição em branco.");
+        }
         break;
       case "Urls":
-        setCurrentPage("Dates");
+        if (validLinks()) {
+          setCurrentPage("Dates");
+        }
         break;
       case "Dates":
-        setCurrentPage("Department");
+        if (validDates()) {
+          setCurrentPage("Department");
+        } else {
+          toast.error("Data de início ou fim em branco.");
+        }
         break;
       case "Department":
-        setCurrentPage("SubAreas");
+        if (validDepartment()) {
+          setCurrentPage("SubAreas");
+        } else {
+          toast.error(
+            "Por favor, selecione o departamento que está promovendo esse evento."
+          );
+        }
         break;
       case "SubAreas":
-        submitCreateEvent();
+        if (validSubAreas()) {
+          submitCreateEvent();
+        } else {
+          toast.error("Por favor, selecione pelo menos uma sub-área.");
+        }
         break;
       default:
         return <></>;
@@ -256,6 +313,7 @@ const CreateEventPage = () => {
                             className="text-black text-center p-2 rounded-full w-36"
                             selected={eventStartDate}
                             onChange={(date) => setEventStartDate(date)}
+                            dateFormat="dd/MM/yyyy"
                           />
                         </div>
                         <div className="flex flex-col gap-4">
@@ -265,6 +323,7 @@ const CreateEventPage = () => {
                             className="text-black text-center p-2 rounded-full w-36"
                             selected={eventEndDate}
                             onChange={(date) => setEventEndDate(date)}
+                            dateFormat="dd/MM/yyyy"
                           />
                         </div>
                       </div>
@@ -287,7 +346,9 @@ const CreateEventPage = () => {
                     ) : (
                       <div className="text-xl font-semibold w-full flex flex-col gap-8">
                         <div className="flex flex-col gap-4">
-                          <span>Quais sub-áreas estão relacionadas a esse evento?</span>
+                          <span>
+                            Quais sub-áreas estão relacionadas a esse evento?
+                          </span>
                           <Select
                             className="text-black rounded-lg"
                             classNamePrefix="bg-opposite-pale"

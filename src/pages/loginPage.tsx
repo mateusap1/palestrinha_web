@@ -24,7 +24,7 @@ const LoginPage = () => {
     } else {
       const responseFailure = response as BackEndResponseFailure;
 
-      setError(`Server failed with error:  ${responseFailure.error}`);
+      setError(`Servidor falhou com erro:  ${responseFailure.error}`);
     }
 
     setIsLoading(false);

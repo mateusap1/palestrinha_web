@@ -9,6 +9,7 @@ type EventProps = {
   endDate: string;
   name: string;
   description: string;
+  subAreas: string[];
 };
 
 export const Event = ({
@@ -17,6 +18,7 @@ export const Event = ({
   endDate,
   name,
   description,
+  subAreas,
 }: EventProps) => {
   const navigate = useNavigate();
 
@@ -44,6 +46,11 @@ export const Event = ({
       <div className="mt-4">
         <h1 className="font-extrabold text-xl">{name}</h1>
         <p className="mt-2 text-sm text-[#DFDFDF] mb-8">{description}</p>
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {subAreas.map((subArea) => (
+          <span className="text-sm text-slate-200">#{subArea}</span>
+        ))}
       </div>
     </div>
   );
